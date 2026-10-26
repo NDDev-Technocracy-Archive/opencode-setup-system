@@ -14,6 +14,9 @@ use std::process::ExitCode;
 
 mod software;
 
+#[cfg(test)]
+mod project_tests;
+
 use harness_runtime::{Harness, LaunchBinding, PreservationSurface, Scoped, Shadow};
 use provider_v3::{ComponentKind, ProjectionKind, TargetScope};
 
@@ -158,7 +161,7 @@ pub const OPENCODE: Harness = Harness {
         ComponentKind::Setting,
     ],
     projection_kinds: &[ProjectionKind::NativeFiles, ProjectionKind::Plugin],
-    // **Two scopes.** The second is `~/.agents`, the one root in this estate
+    // User-root is `~/.agents`, the one root in this estate
     // that belongs to a convention rather than to a product: a *sibling* of
     // this product's configuration home, not a child, so nothing declared
     // against the target above can reach it. That is what `user_root` is for.
@@ -175,19 +178,44 @@ pub const OPENCODE: Harness = Harness {
     // leaves a neighbour's file as it was. Five of the seven products read
     // this root, and all five declare it now; the reason was simply not
     // re-read when the thing it described changed.
-    scoped_projections: &[Scoped {
-        target_scope: TargetScope::UserRoot,
-        // Distinct from the global identity, because the digest binds a
-        // declaration together with the scope it owns.
-        profile_id: "opencode/native-files/user-root/1",
-        component_kinds: &[ComponentKind::Skill],
-        projection_kinds: &[ProjectionKind::NativeFiles],
-        // Relative to `~/.agents`, which is the target this scope names -- so a
-        // skill is `skills/<name>` rather than `.agents/skills/<name>`. Writing
-        // the root into the path would put the skills at
-        // `~/.agents/.agents/skills`.
-        native_namespaces: &["skills"],
-    }],
+    scoped_projections: &[
+        Scoped {
+            target_scope: TargetScope::UserRoot,
+            // Distinct from the global identity, because the digest binds a
+            // declaration together with the scope it owns.
+            profile_id: "opencode/native-files/user-root/1",
+            component_kinds: &[ComponentKind::Skill],
+            projection_kinds: &[ProjectionKind::NativeFiles],
+            // Relative to `~/.agents`, which is the target this scope names -- so a
+            // skill is `skills/<name>` rather than `.agents/skills/<name>`. Writing
+            // the root into the path would put the skills at
+            // `~/.agents/.agents/skills`.
+            native_namespaces: &["skills"],
+        },
+        Scoped {
+            target_scope: TargetScope::Project,
+            profile_id: "opencode/native-files/project/1",
+            component_kinds: &[
+                ComponentKind::Instruction,
+                ComponentKind::Skill,
+                ComponentKind::Agent,
+                ComponentKind::Command,
+                ComponentKind::Plugin,
+                ComponentKind::Setting,
+            ],
+            projection_kinds: &[ProjectionKind::NativeFiles],
+            // Relative to the checkout. The vendor config directory also holds
+            // dependencies and runtime state, so never own it as a whole.
+            native_namespaces: &[
+                "AGENTS.md",
+                "opencode.json",
+                ".opencode/skills",
+                ".opencode/agents",
+                ".opencode/commands",
+                ".opencode/plugins",
+            ],
+        },
+    ],
     max_files: 8192,
     max_bytes: 64 * 1024 * 1024,
     kit_identity: include_str!("../../../provider-kit/v3/KIT-IDENTITY.json"),

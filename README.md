@@ -8,10 +8,16 @@ orchestration; this component owns the final harness files and recovery.
 This repository remains the public source and release boundary, with the
 existing package identity. It is part of ai-stp, not a separate user workflow.
 
-The isolated [Rust CLI preview](https://github.com/ai-engineers-guild/ai-stp/tree/dev/apps/cli-v2)
-reports its implemented capabilities through its executable registry. Native
-writable lifecycle and production cutover are separate acceptance steps;
-this component's commands below do not claim that the preview already installs.
+The native [ai-stp CLI](https://github.com/ai-engineers-guild/ai-stp/tree/main/apps/cli)
+reports implemented capabilities through its executable registry. A new setup
+requires both an authenticated component profile and a qualified consumer route.
+
+Project bundles target the explicit checkout. The project profile owns only
+AGENTS.md, opencode.json and the named .opencode resource directories; it does
+not claim dependencies, runtime state, shared .agents resources or alternative
+configuration files. OpenCode merges configuration sources, and
+OPENCODE_CONFIG_DIR adds a source rather than isolating a personal/corporate
+profile. Managed settings retain their vendor-defined precedence.
 
 Installs, reselects, restores and removes a complete OpenCode harness configuration, and owns the program lifecycle.
 
@@ -183,9 +189,9 @@ download say the same thing.
 
 The ai-stp CLI selects an exact component release, authenticates its artifacts
 and invokes it through the provider protocol. Normal user workflows do not
-require installing this component as a second CLI. The native preview's
-implemented commands are described in its linked contract above; its writable
-lifecycle remains a separate acceptance step.
+require installing this component as a second CLI. The native CLI's executable
+registry describes its implemented commands. Scope-specific installation is
+available only when both the component and consumer qualify that route.
 
 For maintenance, a locally built executable can be checked explicitly through
 the released CLI's expert conformance command:
