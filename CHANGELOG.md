@@ -15,6 +15,19 @@ cut and that this clone does not carry.
 
 ## [Unreleased]
 
+Project bundles have a distinct native-files profile at the explicit checkout.
+The six declared component kinds have prepared application, source-loss replay,
+recovery, replacement and removal coverage on disposable targets. Unowned
+credentials, dependencies, runtime files and neighbouring resources stay intact;
+unsupported project paths refuse before writes. Configuration-source merging
+and managed policy remain properties of OpenCode rather than profile isolation.
+
+Standalone crates.io packages retain every component source module and resolve
+nested crate paths at single-colon boundaries. CI verifies the projected package,
+compiles its tests and reads its actual provider declaration through Cargo's
+configured target directory. Published releases and existing scope fields remain
+unchanged.
+
 ## [0.0.94] - 2026-10-13
 
 Forward configuration plans now support explicit preparation before any

@@ -305,6 +305,90 @@
           }
         ],
         "declined": []
+      },
+      {
+        "target_scope": "project",
+        "root": "explicit checkout root",
+        "measured_at": "2026-10-26",
+        "surfaces": [
+          {
+            "path": "AGENTS.md",
+            "kinds": [
+              "instruction"
+            ],
+            "shape": "file",
+            "source": "https://opencode.ai/docs/rules/",
+            "evidence": "page"
+          },
+          {
+            "path": "opencode.json",
+            "kinds": [
+              "setting"
+            ],
+            "shape": "file",
+            "source": "https://opencode.ai/docs/config/",
+            "evidence": "page"
+          },
+          {
+            "path": ".opencode/skills",
+            "kinds": [
+              "skill"
+            ],
+            "shape": "directory",
+            "source": "https://opencode.ai/docs/skills/",
+            "evidence": "page"
+          },
+          {
+            "path": ".opencode/agents",
+            "kinds": [
+              "agent"
+            ],
+            "shape": "directory",
+            "source": "https://opencode.ai/docs/agents/",
+            "evidence": "page"
+          },
+          {
+            "path": ".opencode/commands",
+            "kinds": [
+              "command"
+            ],
+            "shape": "directory",
+            "source": "https://opencode.ai/docs/commands/",
+            "evidence": "page"
+          },
+          {
+            "path": ".opencode/plugins",
+            "kinds": [
+              "plugin"
+            ],
+            "shape": "directory",
+            "source": "https://opencode.ai/docs/plugins/",
+            "evidence": "page"
+          }
+        ],
+        "declined": [
+          {
+            "path": ".opencode",
+            "reason": "The whole directory contains dependencies, runtime and unowned resources; only named children belong to this profile.",
+            "source": "https://opencode.ai/docs/config/"
+          },
+          {
+            "path": "opencode.jsonc",
+            "reason": "Preserve the alternative config spelling; it can shadow opencode.json.",
+            "source": "https://opencode.ai/docs/config/"
+          },
+          {
+            "path": ".opencode/tui.json",
+            "reason": "No current component route owns project TUI preferences.",
+            "source": "https://opencode.ai/docs/config/"
+          },
+          {
+            "path": ".agents",
+            "reason": "Shared resource ownership is separate; this project profile owns only vendor-specific resource directories.",
+            "source": "https://opencode.ai/docs/config/"
+          }
+        ],
+        "loading_note": "Project configuration is merged with other sources. OPENCODE_CONFIG_DIR adds a source rather than isolating a complete profile. Managed settings take precedence. This declaration does not prove activation or bypass policy."
       }
     ],
     "projection_basis": {
